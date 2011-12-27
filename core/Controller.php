@@ -9,9 +9,9 @@
  
 class Core_Controller
 {
-	protected $_action;
-	protected $_view;
-	protected $_params;
+	private $_action = null;
+	private $_view = null;
+	private $_params = null;
 
 	/**
 	 * Default costructor
@@ -21,7 +21,6 @@ class Core_Controller
 	{
 		$this->_params = $_REQUEST;
 		$this->_action = $action;
-		$this->_view = new Core_View($this);
 	}
 
 
@@ -44,6 +43,7 @@ class Core_Controller
 		return $this->_params;
 	}
 
+
 	/**
 	 * Get the requested action
 	 * @return string
@@ -51,5 +51,19 @@ class Core_Controller
 	public function getAction()
 	{
 		return $this->_action;
+	}
+
+
+	/**
+	 * Get private value of view
+	 * @return Core_View
+	 */
+	protected function _getView()
+	{
+		if ($this->_view === null) {
+			$this->_view = new Core_View($this);
+		}
+
+		return $this->_view;
 	}
 }
