@@ -3,7 +3,8 @@
 /**
  * Controller Class
  * 
- * (c) Adrià Cidre [adria.cidre@gmail.com]
+ * @version 0.1 
+ * @author Adrià Cidre [adria.cidre@gmail.com]
  */
  
 class Core_Controller

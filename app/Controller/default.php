@@ -5,10 +5,11 @@
  * 
  * Example default controller
  * 
- * (c) Adrià Cidre [adria.cidre@gmail.com]
+ * @version 0.1 
+ * @author Adrià Cidre [adria.cidre@gmail.com]
  */
 
-class defaultController extends Core_Controller 
+class App_Controller_Default extends Core_Controller 
 {
 	public function defaultAction()
 	{

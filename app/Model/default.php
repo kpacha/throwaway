@@ -1,7 +1,7 @@
 <?php
 
 
-class defaultModel extens Model
+class defaultModel extens Core_Model
 {
 	
 }

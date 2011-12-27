@@ -1,0 +1,6 @@
+{
+	"\/"	:	{
+		"controller"	:	"App_Controller_Default",
+		"action"		:	"default"
+	}
+}

@@ -1,20 +1,47 @@
 <?php
 
-include_once(APP_PATH . "config/routes.php");
 
-$path = $_SERVER['SCRIPT_URL'];
+class Core_Dispatcher 
+{
+	protected $_routes = array();
 
-$dispatcher = new Dispatcher();
-$route = $dispatcher->getRoute($path);
 
-if (isset($route) && $route != null) {
-	
-	include_once(APP_PATH . "Controller/" . $route['controller'] . ".php");
+	/**
+	 * Starts all the dispatcher logic
+	 */
+	public function __construct() 
+	{
+		$this->_routes = $this->_loadRoutes();
 
-	$controllerName = $route['controller'] . 'Controller';
-	$actionName = $route['action'] . 'Action';
+		$route = $this->getRoute($_SERVER['SCRIPT_URL']);
 
-	$controller = new $controllerName($route['controller'], $route['action']);
-	$controller->{$actionName}();
+		if (isset($route) && $route != null) {
 
+			$controllerName = $route['controller'];
+			$actionName = $route['action'] . 'Action';
+
+			$controller = new $controllerName($route['action']);
+			$controller->{$actionName}();
+
+		}
+	}
+
+	/**
+	* Return the specified route to given path
+	* @param string $path
+	* @return mixed
+	*/
+	public function getRoute($path) 
+	{
+		if (is_string($path) && isset($this->_routes[$path])) {
+			return $this->_routes[$path];
+		} else {
+			return null;
+		}
+	}
+
+	private function _loadRoutes()
+	{
+		return json_decode(file_get_contents(CONFIG_PATH . 'routes.json'), true);
+	}
 }
