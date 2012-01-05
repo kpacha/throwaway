@@ -12,6 +12,7 @@ class Core_Controller
 	private $_action = null;
 	private $_view = null;
 	private $_params = null;
+	private $_response = null;
 
 	/**
 	 * Default costructor
@@ -66,4 +67,52 @@ class Core_Controller
 
 		return $this->_view;
 	}
+
+
+	/**
+	 * Get private value of response
+	 * @return string
+	 */
+	public function getResponse()
+	{
+		if ($this->_response === null) {
+			$this->_response = '';
+		}
+
+		return $this->_response;
+	}
+
+
+	/**
+         * Call the requested action
+         * @param string $actionName
+         * @param mixed $arguments
+	 * @return string
+         */
+	public function __call($actionName, $arguments)
+	{
+                $actionName .= 'Action';
+                if(method_exists($this, $actionName))
+                {
+                    $this->_preDispatch();
+                    $this->_response = $this->{$actionName}();
+                    $this->_postDispatch();
+                }
+
+		return $this->getResponse();
+	}
+        
+        /**
+         * Default predispatch action
+         */
+        public function _preDispatch()
+        {
+        }
+        
+        /**
+         * Default postdispatch action
+         */
+        public function _postDispatch()
+        {
+        }
 }
