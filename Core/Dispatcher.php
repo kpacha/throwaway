@@ -19,15 +19,16 @@ class Core_Dispatcher
 
 		$route = $this->getRoute($this->_getPath());
 
-		if (!empty($route)) {
-			$controllerName = $route['controller'];
-			$actionName = $route['action'] . 'Action';
-
-			$controller = new $controllerName($route['action']);
-			$controller->{$actionName}();
-		} else {
-                        header ("HTTP/1.0 404 Not Found");
+		if (empty($route)) {
+			header ("HTTP/1.0 404 Not Found");
+                        return;
 		}
+                
+                $controllerName = $route['controller'];
+                $actionName = $route['action'];
+
+                $controller = new $controllerName($actionName);
+                echo $controller->{$actionName}();
 	}
 
 	/**
