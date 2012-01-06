@@ -11,6 +11,7 @@ class Core_View
 {
 	protected $_controller = null;
 	protected $_layout = 'default';
+	protected $_params = null;
 
 	/**
 	 * 
@@ -41,9 +42,10 @@ class Core_View
 	 */
 	public function render($path = '', $params = array()) 
 	{
+                $params = array_merge($this->_params, $params);
 		return $this->renderLayout(
 			array_merge(
-				array('content' => $this->_getContent($path)),
+				array('content' => $this->_getContent($path, $params)),
 				$params
 			)
 		);
@@ -59,6 +61,16 @@ class Core_View
 	public function getParam($key)
 	{
 		return $this->_controller->getParam($key);
+	}
+
+	/**
+	 * Set response params
+         * @param string $name
+         * @param mixed $value 
+         */
+	public function setParam($name, $value)
+	{
+		$this->_params[$name] = $value;
 	}
 
 
@@ -85,10 +97,13 @@ class Core_View
 	 * Get the content for a specified path
 	 * 
 	 * @param string $path
+	 * @param array $data
 	 * @return string
 	 */
-	private function _getContent($path)
+	private function _getContent($path, $data = array())
 	{
+		extract($data);
+
 		ob_start();
 		include_once(APP_PATH . "View/" . ( ($path == '') ? $this->_controller->getAction() : $path ) . ".phtml");
 		$content = ob_get_contents();
