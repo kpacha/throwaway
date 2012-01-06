@@ -44,6 +44,26 @@ class Core_Controller
 		return $this->_params;
 	}
 
+	/**
+	 * Set Request params
+	 */
+	public function setParams($params)
+	{
+                if (is_array($params)) {
+                    $this->_params = $params;
+                }
+	}
+
+	/**
+	 * Set Request params
+         * @param string $name
+         * @param mixed $value 
+         */
+	public function setParam($name, $value)
+	{
+		$this->_params[$name] = $value;
+	}
+
 
 	/**
 	 * Get the requested action
@@ -95,8 +115,10 @@ class Core_Controller
                 if(method_exists($this, $actionName))
                 {
                     $this->_preDispatch();
-                    $this->_response = $this->{$actionName}();
+                    $this->{$actionName}();
                     $this->_postDispatch();
+                    
+                    $this->_response = $this->_getView()->render();
                 }
 
 		return $this->getResponse();
