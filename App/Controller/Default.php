@@ -13,6 +13,6 @@ class App_Controller_Default extends Core_Controller
 {
 	public function defaultAction()
 	{
-		return $this->_getView()->render('', array('title' => 'Hello world Title'));
+		$this->_getView()->setParam('title', 'Hello world Title');
 	}
 }
