@@ -17,14 +17,16 @@ class Core_Dispatcher
 	{
 		$this->_routes = $this->_loadRoutes();
 
-		$route = $this->getRoute($_SERVER['SCRIPT_URL']);
+		$route = $this->getRoute($this->_getPath());
 
-		if (isset($route) && $route != null) {
+		if (!empty($route)) {
 			$controllerName = $route['controller'];
 			$actionName = $route['action'] . 'Action';
 
 			$controller = new $controllerName($route['action']);
 			$controller->{$actionName}();
+		} else {
+                        header ("HTTP/1.0 404 Not Found");
 		}
 	}
 
@@ -52,4 +54,20 @@ class Core_Dispatcher
 	{
 		return json_decode(file_get_contents(CONFIG_PATH . 'routes.json'), true);
 	}
+        
+        
+        
+        /**
+         * Get the 'cleaned' requested uri
+         * @return string the requested uri without the index.php part 
+         */
+        private function _getPath()
+        {
+                $requestUri = parse_url($_SERVER['REQUEST_URI']);
+                $path = $requestUri['path'];
+                if (strlen($path) > 1) {
+                        $path = rtrim($path, '/');
+                }
+                return str_replace('//', '/', str_replace('index.php', '', $path));
+        }
 }
