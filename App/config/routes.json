@@ -1,10 +1,10 @@
 {
-	"\/"	:	{
-		"controller"	:	"App_Controller_Default",
-		"action"		:	"default"
-	},
-	"\/test"	:	{
-		"controller"	:	"App_Controller_Default",
-		"action"	:	"default"
-	}
+    "\/"	:	{
+        "controller"	:	"App_Controller_Default",
+        "action"		:	"default"
+    },
+    "\/test"	:	{
+        "controller"	:	"App_Controller_Default",
+        "action"	:	"default"
+    }
 }
