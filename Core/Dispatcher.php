@@ -32,15 +32,18 @@ class Core_Dispatcher
 	/**
 	* Return the specified route to given path
 	* @param string $path
-	* @return mixed
+	* @return array|null
 	*/
 	public function getRoute($path) 
 	{
 		if (is_string($path) && isset($this->_routes[$path])) {
-			return $this->_routes[$path];
+                    $route = $this->_routes[$path];
 		} else {
-			return null;
+                    $requestedPath = explode('/', $path);
+                    $route['controller'] = 'App_Controller_' . (($requestedPath[1]) ? ucfirst($requestedPath[1]) : 'Default');
+                    $route['action'] = (isset($requestedPath[2]))?$requestedPath[2]:'default';
 		}
+                return $route;
 	}
 
 
