@@ -112,14 +112,16 @@ class Core_Controller
 	public function __call($actionName, $arguments)
 	{
                 $actionName .= 'Action';
-                if(method_exists($this, $actionName))
+                if(!method_exists($this, $actionName))
                 {
-                    $this->_preDispatch();
-                    $this->{$actionName}();
-                    $this->_postDispatch();
-                    
-                    $this->_response = $this->_getView()->render();
+                    throw new Exception("Undefined action! [$actionName]");
                 }
+
+                $this->_preDispatch();
+                $this->{$actionName}();
+                $this->_postDispatch();
+
+                $this->_response = $this->_getView()->render();
 
 		return $this->getResponse();
 	}
