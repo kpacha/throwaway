@@ -18,7 +18,11 @@ function __autoload($className)
 {
 	$path = implode("/", explode("_", $className));
 
-	require_once BASE_PATH . $path . '.php';
+        if(file_exists(BASE_PATH . $path . '.php')) {
+            require_once BASE_PATH . $path . '.php';
+        } else {
+            throw new Exception("Class $className not found!");
+        }
 }
 
 new Core_Dispatcher();
