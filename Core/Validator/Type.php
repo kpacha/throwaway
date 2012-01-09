@@ -66,18 +66,6 @@ class Core_Validator_Type
         return is_array($arg);
     }
 
-
-    /**
-     * Checks if the given value is a multidimensional array
-     * @param mixed $arg
-     * @return boolean 
-     */
-    final public function isMatrix($arg)
-    {
-        // TODO Add correct validations
-        return true;
-    }
-
     
     /**
      * Checks if the given value is an object
@@ -87,6 +75,6 @@ class Core_Validator_Type
     final public function isObject($arg)
     {
         // TODO Add correct validations
-        return is_object($var);
+        return is_object($arg);
     }   
 }
