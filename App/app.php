@@ -6,7 +6,6 @@
  * @author Adrià Cidre [adria.cidre@gmail.com]
  */
 
-
 /**
  * Magic method autoload
  * That autoloads all functions based files
@@ -14,11 +13,15 @@
  * 
  * @param string $className
  */
-function __autoload($className) 
+function __autoload($className)
 {
-	$path = implode("/", explode("_", $className));
+    $path = implode("/", explode("_", $className));
 
-	require_once BASE_PATH . $path . '.php';
+    if (file_exists(BASE_PATH . $path . '.php')) {
+        require_once BASE_PATH . $path . '.php';
+    } else {
+        throw new Exception("Class $className not found!");
+    }
 }
 
 new Core_Dispatcher();
