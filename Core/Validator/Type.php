@@ -14,8 +14,8 @@ class Core_Validator_Type
      */
     final public function isString($arg)
     {
-        // TODO Add correct validations
-        return true;
+        // FIXME Define correct rules for this validation
+        return is_string($arg);
     }
     
     
@@ -26,8 +26,8 @@ class Core_Validator_Type
      */
     final public function isFloat($arg)
     {
-        // TODO Add correct validations
-        return true;
+        // FIXME Define correct rules for this validation
+        return is_float($arg);
     }
 
     
@@ -38,8 +38,8 @@ class Core_Validator_Type
      */
     final public function isInteger($arg)
     {
-        // TODO Add correct validations
-        return true;
+        // FIXME Define correct rules for this validation
+        return is_int($arg);
     }
     
     
@@ -50,8 +50,8 @@ class Core_Validator_Type
      */
     final public function isBoolean($arg)
     {
-        // TODO Add correct validations
-        return true;
+        // FIXME Define correct rules for this validation
+        return is_bool($arg);
     }
 
 
@@ -62,8 +62,8 @@ class Core_Validator_Type
      */
     final public function isArray($arg)
     {
-        // TODO Add correct validations
-        return true;
+        // FIXME Define correct rules for this validation
+        return is_array($arg);
     }
 
 
@@ -87,6 +87,6 @@ class Core_Validator_Type
     final public function isObject($arg)
     {
         // TODO Add correct validations
-        return true;
+        return is_object($var);
     }   
 }
