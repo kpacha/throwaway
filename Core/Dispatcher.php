@@ -71,4 +71,9 @@ class Core_Dispatcher
         return str_replace('//', '/', str_replace('index.php', '', $path));
     }
 
+    private function getValidator()
+    {
+        
+    }
+    
 }

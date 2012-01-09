@@ -12,7 +12,7 @@ class Core_Validator_Type
      * @param mixed $arg
      * @return boolean
      */
-    final public static function isString($arg)
+    final public function isString($arg)
     {
         // TODO Add correct validations
         return true;
@@ -24,7 +24,7 @@ class Core_Validator_Type
      * @param mixed $arg
      * @return boolean 
      */
-    final public static function isFloat($arg)
+    final public function isFloat($arg)
     {
         // TODO Add correct validations
         return true;
@@ -36,7 +36,7 @@ class Core_Validator_Type
      * @param mixed $arg
      * @return boolean 
      */
-    final public static function isInteger($arg)
+    final public function isInteger($arg)
     {
         // TODO Add correct validations
         return true;
@@ -48,7 +48,7 @@ class Core_Validator_Type
      * @param mixed $arg
      * @return boolean 
      */
-    final public static function isBoolean($arg)
+    final public function isBoolean($arg)
     {
         // TODO Add correct validations
         return true;
@@ -60,7 +60,7 @@ class Core_Validator_Type
      * @param mixed $arg
      * @return boolean 
      */
-    final public static function isArray($arg)
+    final public function isArray($arg)
     {
         // TODO Add correct validations
         return true;
@@ -72,7 +72,7 @@ class Core_Validator_Type
      * @param mixed $arg
      * @return boolean 
      */
-    final public static function isMatrix($arg)
+    final public function isMatrix($arg)
     {
         // TODO Add correct validations
         return true;
@@ -84,7 +84,7 @@ class Core_Validator_Type
      * @param mixed $arg
      * @return boolean 
      */
-    final public static function isObject($arg)
+    final public function isObject($arg)
     {
         // TODO Add correct validations
         return true;

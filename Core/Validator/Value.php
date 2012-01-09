@@ -13,7 +13,7 @@ class Core_Validator_Value
      * @param mixed $arg
      * @return boolean 
      */
-    final public static function isEmpty($value)
+    final public function isEmpty($value)
     {
         // TODO Add correct validations
         return true;
@@ -25,7 +25,7 @@ class Core_Validator_Value
      * @param mixed $arg
      * @return boolean 
      */
-    final public static function isEmail($value)
+    final public function isEmail($value)
     {
         // TODO Add correct validations
         return true;
@@ -37,7 +37,7 @@ class Core_Validator_Value
      * @param mixed $arg
      * @return boolean 
      */
-    final public static function isPositive($value)
+    final public function isPositive($value)
     {
         // TODO Add correct validations
         return true;
@@ -49,7 +49,7 @@ class Core_Validator_Value
      * @param mixed $arg
      * @return boolean 
      */
-    final public static function isGreatThanZero($value)
+    final public function isGreatThanZero($value)
     {
         // TODO Add correct validations
         return true;
@@ -61,7 +61,7 @@ class Core_Validator_Value
      * @param mixed $arg
      * @return boolean 
      */
-    final public static function isZero($value)
+    final public function isZero($value)
     {
         // TODO Add correct validations
         return true;
@@ -73,7 +73,7 @@ class Core_Validator_Value
      * @param mixed $arg
      * @return boolean 
      */
-    final public static function isTimestamp($value)
+    final public function isTimestamp($value)
     {
         // TODO Add correct validations
         return true;
@@ -85,7 +85,7 @@ class Core_Validator_Value
      * @param mixed $arg
      * @return boolean 
      */
-    final public static function isURL($value)
+    final public function isURL($value)
     {
         // TODO Add correct validations
         return true;
@@ -97,7 +97,7 @@ class Core_Validator_Value
      * @param mixed $arg
      * @return boolean 
      */
-    final public static function isIP($value)
+    final public function isIP($value)
     {
         // TODO Add correct validations
         return true;
@@ -109,7 +109,7 @@ class Core_Validator_Value
      * @param mixed $arg
      * @return boolean 
      */
-    final public static function isIPv4($value)
+    final public function isIPv4($value)
     {
         // TODO Add correct validations
         return true;
@@ -121,7 +121,7 @@ class Core_Validator_Value
      * @param mixed $arg
      * @return boolean 
      */
-    final public static function isIPv6($value)
+    final public function isIPv6($value)
     {
         // TODO Add correct validations
         return true;
