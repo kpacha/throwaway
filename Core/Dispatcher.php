@@ -24,7 +24,7 @@ class Core_Dispatcher
             $controllerName = $route['controller'];
             $actionName = $route['action'];
             $controller = new $controllerName($actionName);
-            echo $controller->{$actionName}();
+            $this->_showContent($controller->{$actionName}());
         } catch (Exception $e) {
             header("HTTP/1.0 404 Not Found");
         }
@@ -70,5 +70,16 @@ class Core_Dispatcher
         }
         return str_replace('//', '/', str_replace('index.php', '', $path));
     }
+    
 
+    /**
+     * Shows the content
+     * @param string $content 
+     */
+    private function _showContent($content)
+    {
+        // TODO Do this on an elegant way with headers...
+        echo $content;
+    }
+    
 }
