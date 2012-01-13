@@ -12,6 +12,7 @@ class Core_View
     protected $_controller = null;
     protected $_layout = 'default';
     protected $_params = null;
+    protected $_render = null;
 
     /**
      * 
@@ -22,14 +23,14 @@ class Core_View
     }
 
     /**
-     *  Return path's spacified file as string
+     *  Return path's spacified template as string
      * 
      *  @param string $path
      *  @return string
      */
     public function load($path = '')
     {
-        return $this->_getContent($path);
+        return $this->_getTemplate($path);
     }
 
     /**
@@ -44,7 +45,7 @@ class Core_View
         $params = array_merge($this->_params, $params);
         return $this->renderLayout(
                         array_merge(
-                                array('content' => $this->_getContent($path, $params)), $params
+                                array('content' => $this->_getTemplate($path, $params)), $params
                         )
         );
     }
@@ -73,36 +74,46 @@ class Core_View
     /**
      * Renders a given layout with specified content
      * 
-     * @param $content mixed
+     * @param array $data
      * @return string
      */
-    public function renderLayout($data)
+    public function renderLayout($data = array())
     {
-        extract($data);
-
-        ob_start();
-        include_once(APP_PATH . "View/layouts/" . $this->_layout . ".phtml");
-        $content = ob_get_contents();
-        ob_end_clean();
-
-        return $content;
+        return $this->_includePath(APP_PATH . "View/layouts/" . $this->_layout . ".phtml", $data);
     }
 
     /**
-     * Get the content for a specified path
+     * Get the template for a specified path
      * 
      * @param string $path
      * @param array $data
      * @return string
      */
-    private function _getContent($path, $data = array())
+    private function _getTemplate($path, $data = array())
     {
+        return $this->_includePath(
+                        APP_PATH . "View/" . ( ($path) ? : $this->_controller->getAction() ) . ".phtml", $data
+        );
+    }
+
+    /**
+     * Include a specified path
+     * 
+     * @param string $path
+     * @param array $data
+     * @return string
+     */
+    private function _includePath($path, $data = array())
+    {
+        $content = '';
         extract($data);
 
-        ob_start();
-        include_once(APP_PATH . "View/" . ( ($path == '') ? $this->_controller->getAction() : $path ) . ".phtml");
-        $content = ob_get_contents();
-        ob_end_clean();
+        if (is_file($path) && is_readable($path)) {
+            ob_start();
+            include_once($path);
+            $content = ob_get_contents();
+            ob_end_clean();
+        }
 
         return $content;
     }
