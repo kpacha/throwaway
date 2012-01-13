@@ -12,7 +12,8 @@ class Core_Controller
     private $_action = null;
     private $_view = null;
     private $_params = null;
-    private $_response = null;
+    private $_headers = null;
+    protected $_response = null;
 
     /**
      * Default costructor
@@ -61,6 +62,44 @@ class Core_Controller
     public function setParam($name, $value)
     {
         $this->_params[$name] = $value;
+    }
+
+    /**
+     * Get Response header based on its key
+     * @param string $key
+     * @return string
+     */
+    public function getHeader($key)
+    {
+        return ( isset($this->_headers{$key}) ) ? $this->_headers{$key} : null;
+    }
+
+    /**
+     * Get Response headers
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->_headers;
+    }
+
+    /**
+     * Set Response headers
+     */
+    public function setHeaders($headers)
+    {
+        if (is_array($headers)) {
+            $this->_headers = $headers;
+        }
+    }
+
+    /**
+     * Set Response header
+     * @param string $value 
+     */
+    public function addHeader($value)
+    {
+        $this->_headers[] = $value;
     }
 
     /**
