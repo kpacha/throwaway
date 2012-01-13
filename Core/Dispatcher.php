@@ -77,16 +77,17 @@ class Core_Dispatcher
         }
         return str_replace('//', '/', str_replace('index.php', '', $path));
     }
-    
 
     /**
      * Shows the content
-     * @param string $content 
+     * @param Core_Controller $content 
      */
-    private function _showContent($content)
+    private function _showContent(Core_Controller $controller)
     {
-        // TODO Do this on an elegant way with headers...
-        echo $content;
+        foreach ($controller->getHeaders() as $headerString) {
+            header($headerString);
+        }
+        echo $controller->getResponse();
     }
-    
+
 }
