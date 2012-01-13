@@ -7,5 +7,8 @@ define('CORE_PATH', BASE_PATH . 'Core/');
 
 define('CONFIG_PATH', APP_PATH . 'config/');
 
+//define('DEBUG_MODE', false);
+define('DEBUG_MODE', true);
+
 include_once(APP_PATH . 'app.php');
 

@@ -26,7 +26,14 @@ class Core_Dispatcher
             $controller = new $controllerName($actionName);
             $this->_showContent($controller->{$actionName}());
         } catch (Exception $e) {
-            header("HTTP/1.0 404 Not Found");
+            if (DEBUG_MODE) {
+                echo "<h2>ERROR:</h2>";
+                echo "<pre>";
+                var_dump($e);
+                echo "</pre>";
+            } else {
+                header("HTTP/1.0 404 Not Found");
+            }
         }
     }
 
