@@ -154,9 +154,12 @@ class Core_Controller
         $this->{$actionName}();
         $this->_postDispatch();
 
-        $this->_response = $this->_getView()->render();
+        // Check if the action has set the response instead of using a template
+        if (!$this->_response) {
+            $this->_response = $this->_getView()->render();
+        }
 
-        return $this->getResponse();
+        return $this;
     }
 
     /**
