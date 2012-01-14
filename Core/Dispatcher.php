@@ -84,8 +84,10 @@ class Core_Dispatcher
      */
     private function _showContent(Core_Controller $controller)
     {
-        foreach ($controller->getHeaders() as $headerString) {
-            header($headerString);
+        if ($controller->getHeaders()) {
+            foreach ($controller->getHeaders() as $headerString) {
+                header($headerString);
+            }
         }
         echo $controller->getResponse();
     }
