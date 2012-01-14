@@ -10,12 +10,18 @@ class Core_Dispatcher
 {
 
     protected $_routes = array();
+    private $_profiler;
+    private $_db = '';
 
     /**
      * Starts all the dispatcher logic
      */
     public function __construct()
     {
+        if (DEBUG_MODE) {
+            $this->_profiler = new Pqp_PhpQuickProfiler(Pqp_PhpQuickProfiler::getMicroTime());
+        }
+
         $this->_routes = $this->_loadRoutes();
 
         $route = $this->getRoute($this->_getPath());
@@ -34,6 +40,13 @@ class Core_Dispatcher
             } else {
                 header("HTTP/1.0 404 Not Found");
             }
+        }
+    }
+    
+    public function __destruct()
+    {
+        if (DEBUG_MODE) {
+            $this->_profiler->display($this->_db);
         }
     }
 
