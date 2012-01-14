@@ -19,8 +19,10 @@ function __autoload($className)
 
     if (file_exists(BASE_PATH . $path . '.php')) {
         require_once BASE_PATH . $path . '.php';
+    } elseif (file_exists(LIBRARY_PATH . $path . '.php')) {
+        require_once LIBRARY_PATH . $path . '.php';
     } else {
-        throw new Exception("Class $className not found!");
+        throw new Exception("Class $className not found! Looking for $path");
     }
 }
 

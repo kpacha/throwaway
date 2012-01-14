@@ -6,6 +6,7 @@ define('APP_PATH', BASE_PATH . 'App/');
 define('CORE_PATH', BASE_PATH . 'Core/');
 
 define('CONFIG_PATH', APP_PATH . 'config/');
+define('LIBRARY_PATH', BASE_PATH . 'library/');
 
 //define('DEBUG_MODE', false);
 define('DEBUG_MODE', true);
