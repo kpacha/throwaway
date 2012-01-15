@@ -20,32 +20,43 @@ class Core_Dispatcher
     {
         if (DEBUG_MODE) {
             $this->_profiler = new Pqp_PhpQuickProfiler(Pqp_PhpQuickProfiler::getMicroTime());
+            $this->_profillingPoint('Starting the application');
         }
 
         $this->_routes = $this->_loadRoutes();
 
         $route = $this->getRoute($this->_getPath());
 
+        $this->_profillingPoint('Routing the application');
+
         try {
             $controllerName = $route['controller'];
             $actionName = $route['action'];
             $controller = new $controllerName($actionName);
-            $this->_showContent($controller->{$actionName}());
+
+            $this->_profillingPoint('Controller loaded');
+
+            $controller = $controller->{$actionName}();
+
+            $this->_profillingPoint('Action executed');
+
+            $this->_showContent($controller);
+
+            $this->_profillingPoint('View rendered');
+
         } catch (Exception $e) {
             if (DEBUG_MODE) {
-                echo "<h2>ERROR:</h2>";
-                echo "<pre>";
-                var_dump($e);
-                echo "</pre>";
+                Console::logError($e);
             } else {
                 header("HTTP/1.0 404 Not Found");
             }
         }
     }
-    
+
     public function __destruct()
     {
         if (DEBUG_MODE) {
+            Console::log('Ending the application');
             $this->_profiler->display($this->_db);
         }
     }
@@ -103,6 +114,18 @@ class Core_Dispatcher
             }
         }
         echo $controller->getResponse();
+    }
+
+    /**
+     * Log the memory and time consumed at this time
+     * @param string $message 
+     */
+    private function _profillingPoint($message = '')
+    {
+        if (DEBUG_MODE) {
+            Console::logMemory();
+            Console::logSpeed($message);
+        }
     }
 
 }
