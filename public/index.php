@@ -15,5 +15,8 @@ if (DEBUG_MODE) {
     error_reporting(E_ALL | E_STRICT);
 }
 
-include_once(APP_PATH . 'app.php');
+include_once(CORE_PATH . 'Application.php');
 
+$app = new Core_Application();
+
+$app->run();
