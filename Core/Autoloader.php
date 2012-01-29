@@ -7,10 +7,16 @@
  */
 class Core_Autoloader
 {
+
     /**
      * @var Core_Autoloader Singleton instance
      */
     protected static $_instance;
+
+    /**
+     * @var array The included paths
+     */
+    protected $_includePaths;
 
     public function __construct()
     {
@@ -21,13 +27,21 @@ class Core_Autoloader
     {
         $path = implode("/", explode("_", $className));
 
-        if (file_exists(BASE_PATH . $path . '.php')) {
-            require_once BASE_PATH . $path . '.php';
-        } elseif (file_exists(LIBRARY_PATH . $path . '.php')) {
-            require_once LIBRARY_PATH . $path . '.php';
-        } else {
-            throw new Exception("Class $className not found! Looking for $path");
+        foreach ($this->getIncludePaths() as $base) {
+            if (file_exists($base . $path . '.php')) {
+                require_once $base . $path . '.php';
+                return;
+            }
         }
+        throw new Exception("Class $className not found! Looking for $path");
+    }
+
+    private function getIncludePaths()
+    {
+        if ($this->_includePaths === null) {
+            $this->_includePaths = array(BASE_PATH, LIBRARY_PATH);
+        }
+        return $this->_includePaths;
     }
 
     /**
