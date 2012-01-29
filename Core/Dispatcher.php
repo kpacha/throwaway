@@ -24,33 +24,6 @@ class Core_Dispatcher
         }
 
         $this->_routes = $this->_loadRoutes();
-
-        $route = $this->getRoute($this->_getPath());
-
-        $this->_profillingPoint('Routing the application');
-
-        try {
-            $controllerName = $route['controller'];
-            $actionName = $route['action'];
-            $controller = new $controllerName($actionName);
-
-            $this->_profillingPoint('Controller loaded');
-
-            $controller = $controller->{$actionName}();
-
-            $this->_profillingPoint('Action executed');
-
-            $this->_showContent($controller);
-
-            $this->_profillingPoint('View rendered');
-
-        } catch (Exception $e) {
-            if (DEBUG_MODE) {
-                Console::logError($e);
-            } else {
-                header("HTTP/1.0 404 Not Found");
-            }
-        }
     }
 
     public function __destruct()
@@ -125,6 +98,35 @@ class Core_Dispatcher
         if (DEBUG_MODE) {
             Console::logMemory();
             Console::logSpeed($message);
+        }
+    }
+
+    public function run()
+    {
+        $route = $this->getRoute($this->_getPath());
+
+        $this->_profillingPoint('Routing the application');
+
+        try {
+            $controllerName = $route['controller'];
+            $actionName = $route['action'];
+            $controller = new $controllerName($actionName);
+
+            $this->_profillingPoint('Controller loaded');
+
+            $controller = $controller->{$actionName}();
+
+            $this->_profillingPoint('Action executed');
+
+            $this->_showContent($controller);
+
+            $this->_profillingPoint('View rendered');
+        } catch (Exception $e) {
+            if (DEBUG_MODE) {
+                Console::logError($e);
+            } else {
+                header("HTTP/1.0 404 Not Found");
+            }
         }
     }
 
