@@ -18,10 +18,11 @@ class Core_Controller
     /**
      * Default costructor
      * @param string $action
+     * @param array $params
      */
-    public function __construct($action)
+    public function __construct($action, $params = null)
     {
-        $this->_params = $_REQUEST;
+        $this->_params = $params;
 
         $actionName = $action . 'Action';
         if (!method_exists($this, $actionName)) {
@@ -145,11 +146,12 @@ class Core_Controller
 
     /**
      * Call the requested action
-     * @param mixed $arguments
+     * @param array $arguments
      * @return Core_Controller
      */
-    public function handle($arguments = null)
+    public function handle($arguments = array())
     {
+        $this->_params = array_merge($this->_params, $arguments);
         $this->_preDispatch();
         $this->{$this->_action}($arguments);
         $this->_postDispatch();

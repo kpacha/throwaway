@@ -109,7 +109,7 @@ class Core_Dispatcher
     public function run()
     {
         try {
-            $controller = $this->handle();
+            $controller = $this->handle($this->_getRequest());
             $this->_profillingPoint('Action executed');
 
             $this->_showContent($controller);
@@ -127,7 +127,7 @@ class Core_Dispatcher
      * Route the request and return the controller with the response
      * @return Core_Controller
      */
-    private function handle()
+    private function handle($request = null)
     {
         $route = $this->getRoute($this->_getPath());
         $this->_profillingPoint('Routing the application');
@@ -136,7 +136,11 @@ class Core_Dispatcher
         $controller = new $controllerName($actionName);
         $this->_profillingPoint('Controller loaded');
 
-        return $controller->handle();
+        return $controller->handle($request);
+    }
+    
+    private function _getRequest(){
+        return $_REQUEST;
     }
 
 }
