@@ -1,5 +1,8 @@
 <?php
 
+$time = explode(' ', microtime());
+define('START_TIME', $time[1] + $time[0]);
+
 define('BASE_PATH', str_replace('public', '', __DIR__));
 
 define('APP_PATH', BASE_PATH . 'App/');

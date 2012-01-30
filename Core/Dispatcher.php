@@ -15,11 +15,13 @@ class Core_Dispatcher
 
     /**
      * Starts all the dispatcher logic
+     * @param int|null $startTime 
      */
-    public function __construct()
+    public function __construct($startTime = 0)
     {
         if (DEBUG_MODE) {
-            $this->_profiler = new Pqp_PhpQuickProfiler(Pqp_PhpQuickProfiler::getMicroTime());
+            $startTime = ($startTime)?:Pqp_PhpQuickProfiler::getMicroTime();
+            $this->_profiler = new Pqp_PhpQuickProfiler($startTime);
             $this->_profillingPoint('Starting the application');
         }
 
@@ -101,33 +103,40 @@ class Core_Dispatcher
         }
     }
 
+    /**
+     * Run the application
+     */
     public function run()
     {
-        $route = $this->getRoute($this->_getPath());
-
-        $this->_profillingPoint('Routing the application');
-
         try {
-            $controllerName = $route['controller'];
-            $actionName = $route['action'];
-            $controller = new $controllerName($actionName);
-
-            $this->_profillingPoint('Controller loaded');
-
-            $controller = $controller->{$actionName}();
-
+            $controller = $this->handle();
             $this->_profillingPoint('Action executed');
 
             $this->_showContent($controller);
-
             $this->_profillingPoint('View rendered');
         } catch (Exception $e) {
             if (DEBUG_MODE) {
-                Console::logError($e);
+                Console::logError($e, $e->getMessage());
             } else {
                 header("HTTP/1.0 404 Not Found");
             }
         }
+    }
+
+    /**
+     * Route the request and return the controller with the response
+     * @return Core_Controller
+     */
+    private function handle()
+    {
+        $route = $this->getRoute($this->_getPath());
+        $this->_profillingPoint('Routing the application');
+        $controllerName = $route['controller'];
+        $actionName = $route['action'];
+        $controller = new $controllerName($actionName);
+        $this->_profillingPoint('Controller loaded');
+
+        return $controller->handle();
     }
 
 }

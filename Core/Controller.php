@@ -22,7 +22,13 @@ class Core_Controller
     public function __construct($action)
     {
         $this->_params = $_REQUEST;
-        $this->_action = $action;
+
+        $actionName = $action . 'Action';
+        if (!method_exists($this, $actionName)) {
+            throw new Exception("Undefined action! [$actionName]");
+        }
+
+        $this->_action = $actionName;
     }
 
     /**
@@ -139,25 +145,16 @@ class Core_Controller
 
     /**
      * Call the requested action
-     * @param string $actionName
      * @param mixed $arguments
      * @return string
      */
-    public function __call($actionName, $arguments)
+    public function handle($arguments = null)
     {
-        $actionName .= 'Action';
-        if (!method_exists($this, $actionName)) {
-            throw new Exception("Undefined action! [$actionName]");
-        }
-
         $this->_preDispatch();
-        $this->{$actionName}();
+        $this->{$this->_action}($arguments);
         $this->_postDispatch();
 
-        // Check if the action has set the response instead of using a template
-        if (!$this->_response) {
-            $this->_response = $this->_getView()->render();
-        }
+        $this->_render();
 
         return $this;
     }
@@ -176,6 +173,14 @@ class Core_Controller
     public function _postDispatch()
     {
         
+    }
+
+    private function _render()
+    {
+        // Check if the action has set the response instead of using a template
+        if (!$this->_response) {
+            $this->_response = $this->_getView()->render();
+        }
     }
 
 }

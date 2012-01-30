@@ -35,7 +35,7 @@ class Core_Application
     public function getDispatcher()
     {
         if (null === $this->_dispatcher) {
-            $this->_dispatcher = new Core_Dispatcher();
+            $this->_dispatcher = new Core_Dispatcher(START_TIME);
         }
         return $this->_dispatcher;
     }
