@@ -1,12 +1,13 @@
 <?php
 
 /**
- * Description of Application
+ * Application logic
  *
  * @author Kpacha <kpacha666@gmail.com>
  */
 class Core_Application
 {
+
     /**
      * Autoloader to use
      *
@@ -21,6 +22,9 @@ class Core_Application
      */
     protected $_dispatcher;
 
+    /**
+     * The default constructor loads the default autoloader
+     */
     public function __construct()
     {
         require_once __DIR__ . '/Autoloader.php';

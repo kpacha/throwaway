@@ -146,7 +146,7 @@ class Core_Controller
     /**
      * Call the requested action
      * @param mixed $arguments
-     * @return string
+     * @return Core_Controller
      */
     public function handle($arguments = null)
     {
@@ -175,6 +175,9 @@ class Core_Controller
         
     }
 
+    /**
+     * Render the view if the controller did not set a response
+     */
     private function _render()
     {
         // Check if the action has set the response instead of using a template

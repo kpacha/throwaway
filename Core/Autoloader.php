@@ -18,11 +18,20 @@ class Core_Autoloader
      */
     protected $_includePaths;
 
+    /**
+     * Declare the default autoloading method
+     */
     public function __construct()
     {
         spl_autoload_register(array($this, 'loader'));
     }
 
+    /**
+     * The default autoloader
+     * 
+     * @param string $className
+     * @exception Exception If the class was not found
+     */
     private function loader($className)
     {
         $path = implode("/", explode("_", $className));
@@ -36,6 +45,11 @@ class Core_Autoloader
         throw new Exception("Class $className not found! Looking for $path");
     }
 
+    /**
+     * Get an array of the paths to include
+     *
+     * @return array The paths to include
+     */
     private function getIncludePaths()
     {
         if ($this->_includePaths === null) {
