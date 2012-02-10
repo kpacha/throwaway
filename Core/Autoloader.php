@@ -37,8 +37,9 @@ class Core_Autoloader
         $path = implode("/", explode("_", $className));
 
         foreach ($this->getIncludePaths() as $base) {
-            if (file_exists($base . $path . '.php')) {
-                require_once $base . $path . '.php';
+            $absolutePath = realpath($base . $path . '.php');
+            if (file_exists($absolutePath)) {
+                require_once $absolutePath;
                 return;
             }
         }
