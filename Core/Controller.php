@@ -20,7 +20,7 @@ class Core_Controller
      * @param string $action
      * @param array $params
      */
-    public function __construct($action, $params = null)
+    public function __construct($action, $params = array())
     {
         $this->_params = $params;
 
